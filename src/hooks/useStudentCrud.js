@@ -12,24 +12,43 @@ export function useStudentCrud(setLocalStudents) {
     setStudentDialogOpen(true);
     setStudentEditIndex(null);
   };
-  const handleEditStudent = (student, idx) => {
+  const handleEditStudent = (student) => {
     setStudentDialogMode('edit');
     setStudentDialogData(student);
     setStudentDialogOpen(true);
-    setStudentEditIndex(idx);
+    setStudentEditIndex(
+      typeof student?.id !== 'undefined'
+        ? (typeof setLocalStudents._lastValue === 'object'
+            ? setLocalStudents._lastValue.findIndex(s => s.id === student.id)
+            : null)
+        : null
+    );
   };
-  const handleDeleteStudent = (idx) => {
-    setLocalStudents((prev) => prev.filter((_, i) => i !== idx));
+  const handleDeleteStudent = (student) => {
+    setLocalStudents((prev) => prev.filter((s) => s.id !== student.id));
   };
   const handleDialogChange = (e) => {
     const { name, value } = e.target;
     setStudentDialogData((prev) => ({ ...prev, [name]: value }));
   };
   const handleDialogSave = () => {
+    // Validate required fields
+    if (!studentDialogData.name?.trim()) {
+      // Optionally show an error notification here
+      alert('Student name is required.');
+      return;
+    }
     if (studentDialogMode === 'add') {
-      setLocalStudents((prev) => [...prev, { ...studentDialogData, id: Date.now().toString() }]);
+      // Use a more robust ID generation
+      setLocalStudents((prev) => [
+        ...prev,
+        {
+          ...studentDialogData,
+          id: `student-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+        }
+      ]);
     } else if (studentDialogMode === 'edit' && studentEditIndex !== null) {
-      setLocalStudents((prev) => prev.map((s, i) => i === studentEditIndex ? { ...studentDialogData } : s));
+      setLocalStudents((prev) => prev.map((s, i) => i === studentEditIndex ? studentDialogData : s));
     }
     setStudentDialogOpen(false);
   };

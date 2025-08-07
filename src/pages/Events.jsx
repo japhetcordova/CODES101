@@ -105,7 +105,7 @@ export default function SeparatedTables() {
       <Grid item xs={12} sm={3}>
         <SessionManager
           sessions={sessions}
-          setSessions={setLocalEvents}
+          setEvents={setLocalEvents}
           selectedSession={selectedSession}
           setSelectedSession={setSelectedSession}
           setSelectedRoom={setSelectedRoom}
@@ -123,11 +123,9 @@ export default function SeparatedTables() {
       <Grid item xs={12} sm={3}>
         <RoomManager
           rooms={rooms}
-          setRooms={setLocalEvents}
+          setEvents={setLocalEvents}
           selectedRoom={selectedRoom}
           setSelectedRoom={setSelectedRoom}
-          setSelectedSession={setSelectedSession}
-          selectedEvent={selectedEvent}
           notification={notification}
           setNotification={setNotification}
           page={roomPage}

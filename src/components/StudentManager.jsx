@@ -44,14 +44,8 @@ export default function StudentManager({
         selectedId={selectedStudent?.id}
         onRowClick={setSelectedStudent}
         onAdd={handleAddStudent}
-        onEdit={student => {
-          const idx = students.findIndex(s => s.id === student.id);
-          handleEditStudent(student, idx);
-        }}
-        onDelete={student => {
-          const idx = students.findIndex(s => s.id === student.id);
-          handleDeleteStudent(idx);
-        }}
+        onEdit={handleEditStudent}
+        onDelete={handleDeleteStudent}
         addLabel="Add Student"
       />
 

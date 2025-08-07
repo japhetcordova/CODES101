@@ -5,7 +5,7 @@ import Notification from './Notification';
 
 export default function SessionManager({
   sessions,
-  setSessions,
+  setEvents,
   selectedSession,
   setSelectedSession,
   setSelectedRoom,
@@ -29,7 +29,7 @@ export default function SessionManager({
     handleSessionDialogClose
   } = useSessionCrud({
     selectedEvent,
-    setLocalEvents: setSessions,
+    setLocalEvents: setEvents,
     setSelectedSession,
     setSelectedRoom,
     setNotification
