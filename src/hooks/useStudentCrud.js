@@ -1,21 +1,21 @@
 import { useState } from 'react';
 
 export function useStudentCrud(setLocalStudents) {
-  const [studentDialogOpen, setStudentDialogOpen] = useState(false);
-  const [studentDialogMode, setStudentDialogMode] = useState('add');
-  const [studentDialogData, setStudentDialogData] = useState({ id: '', name: '', yearLevel: '', program: '' });
+  const [studentFormOpen, setStudentFormOpen] = useState(false);
+  const [studentFormMode, setStudentFormMode] = useState('add');
+  const [studentFormData, setStudentFormData] = useState({ id: '', name: '', yearLevel: '', program: '' });
   const [studentEditIndex, setStudentEditIndex] = useState(null);
 
-  const handleAddStudent = () => {
-    setStudentDialogMode('add');
-    setStudentDialogData({ id: '', name: '', yearLevel: '', program: '' });
-    setStudentDialogOpen(true);
+  const openAddStudentForm = () => {
+    setStudentFormMode('add');
+    setStudentFormData({ id: '', name: '', yearLevel: '', program: '' });
+    setStudentFormOpen(true);
     setStudentEditIndex(null);
   };
-  const handleEditStudent = (student) => {
-    setStudentDialogMode('edit');
-    setStudentDialogData(student);
-    setStudentDialogOpen(true);
+  const openEditStudentForm = (student) => {
+    setStudentFormMode('edit');
+    setStudentFormData(student);
+    setStudentFormOpen(true);
     setStudentEditIndex(
       typeof student?.id !== 'undefined'
         ? (typeof setLocalStudents._lastValue === 'object'
@@ -24,48 +24,48 @@ export function useStudentCrud(setLocalStudents) {
         : null
     );
   };
-  const handleDeleteStudent = (student) => {
+  const deleteStudent = (student) => {
     setLocalStudents((prev) => prev.filter((s) => s.id !== student.id));
   };
-  const handleDialogChange = (e) => {
+  const handleStudentFormChange = (e) => {
     const { name, value } = e.target;
-    setStudentDialogData((prev) => ({ ...prev, [name]: value }));
+    setStudentFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleDialogSave = () => {
+  const handleStudentFormSave = () => {
     // Validate required fields
-    if (!studentDialogData.name?.trim()) {
+    if (!studentFormData.name?.trim()) {
       // Optionally show an error notification here
       alert('Student name is required.');
       return;
     }
-    if (studentDialogMode === 'add') {
+    if (studentFormMode === 'add') {
       // Use a more robust ID generation
       setLocalStudents((prev) => [
         ...prev,
         {
-          ...studentDialogData,
+          ...studentFormData,
           id: `student-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
         }
       ]);
-    } else if (studentDialogMode === 'edit' && studentEditIndex !== null) {
-      setLocalStudents((prev) => prev.map((s, i) => i === studentEditIndex ? studentDialogData : s));
+    } else if (studentFormMode === 'edit' && studentEditIndex !== null) {
+      setLocalStudents((prev) => prev.map((s, i) => i === studentEditIndex ? studentFormData : s));
     }
-    setStudentDialogOpen(false);
+    setStudentFormOpen(false);
   };
-  const handleDialogClose = () => {
-    setStudentDialogOpen(false);
+  const closeStudentForm = () => {
+    setStudentFormOpen(false);
   };
 
   return {
-    studentDialogOpen,
-    studentDialogMode,
-    studentDialogData,
+    studentFormOpen,
+    studentFormMode,
+    studentFormData,
     studentEditIndex,
-    handleAddStudent,
-    handleEditStudent,
-    handleDeleteStudent,
-    handleDialogChange,
-    handleDialogSave,
-    handleDialogClose
+    openAddStudentForm,
+    openEditStudentForm,
+    deleteStudent,
+    handleStudentFormChange,
+    handleStudentFormSave,
+    closeStudentForm
   };
 }
