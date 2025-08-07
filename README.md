@@ -65,7 +65,7 @@
 
 | Events & Sessions | Rooms & Students |
 |-------------------|------------------|
-| ![Events](./screenshots/events.png) | ![Students](./screenshots/students.png) |
+| ![Events](![over all view](image.png)) | ![Students](![crud functionality](image-1.png)) |
 
 ---
 
