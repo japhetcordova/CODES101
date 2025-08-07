@@ -1,4 +1,3 @@
-// src/components/StudentManager.jsx
 import CrudTable from './CrudTable';
 import CrudDialog from './CrudDialog';
 import { useStudentCrud } from '../hooks/useStudentCrud';
@@ -17,25 +16,26 @@ export default function StudentManager({
   onRowsPerPageChange
 }) {
   const {
-    studentDialogOpen,
-    studentDialogMode,
-    studentDialogData,
-    handleAddStudent,
-    handleEditStudent,
-    handleDeleteStudent,
-    handleStudentDialogChange,
-    handleStudentDialogSave,
-    handleStudentDialogClose
-  } = useStudentCrud({
-    setLocalStudents: setStudents,
-    setSelectedStudent,
-    setNotification
-  });
+    studentFormOpen,
+    studentFormMode,
+    studentFormData,
+    openAddStudentForm,
+    openEditStudentForm,
+    deleteStudent,
+    handleStudentFormChange,
+    handleStudentFormSave,
+    closeStudentForm
+  } = useStudentCrud(setStudents);
 
   return (
     <>
       <CrudTable
-        columns={[{ label: 'Students', accessor: 'name' }]}
+        columns={[
+          { label: 'ID', accessor: 'id' },
+          { label: 'Name', accessor: 'name' },
+          { label: 'Year Level', accessor: 'yearLevel' },
+          { label: 'Program', accessor: 'program' }
+        ]}
         data={students}
         page={page}
         rowsPerPage={rowsPerPage}
@@ -43,26 +43,26 @@ export default function StudentManager({
         onRowsPerPageChange={onRowsPerPageChange}
         selectedId={selectedStudent?.id}
         onRowClick={setSelectedStudent}
-        onAdd={handleAddStudent}
-        onEdit={handleEditStudent}
-        onDelete={handleDeleteStudent}
+        onAdd={openAddStudentForm}
+        onEdit={openEditStudentForm}
+        onDelete={deleteStudent}
         addLabel="Add Student"
       />
 
       <CrudDialog
-        open={studentDialogOpen}
-        mode={studentDialogMode}
+        open={studentFormOpen}
+        mode={studentFormMode}
         title="Student"
-        fields={[ 
-                  { label: 'ID', accessor: 'id' },
-                  { label: 'Name', accessor: 'name' },
-                  { label: 'Year Level', accessor: 'yearLevel' },
-                  { label: 'Program', accessor: 'program' }
-                ]}
-        data={studentDialogData}
-        onChange={handleStudentDialogChange}
-        onClose={handleStudentDialogClose}
-        onSave={handleStudentDialogSave}
+        fields={[
+          { label: 'ID', name: 'id' },
+          { label: 'Name', name: 'name', autoFocus: true },
+          { label: 'Year Level', name: 'yearLevel' },
+          { label: 'Program', name: 'program' }
+        ]}
+        data={studentFormData}
+        onChange={handleStudentFormChange}
+        onClose={closeStudentForm}
+        onSave={handleStudentFormSave}
       />
       <Notification notification={notification} setNotification={setNotification} />
     </>
