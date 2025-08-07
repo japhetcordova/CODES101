@@ -65,7 +65,7 @@
 
 | Overview | CRUD |
 |-------------------|------------------|
-| [over all view](image.png) | ![crud functionality ](image-1.png) |
+| ![over all view](image.png) | ![crud functionality ](image-1.png) |
 
 ---
 
