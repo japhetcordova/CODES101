@@ -63,9 +63,9 @@
 
 ## Screenshots
 
-| Events & Sessions | Rooms & Students |
+| Overview | CRUD Functionality |
 |-------------------|------------------|
-| ![Events](![over all view](image.png)) | ![Students](![crud functionality](image-1.png)) |
+| image.png | image-1.png |
 
 ---
 
